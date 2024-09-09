@@ -1,11 +1,12 @@
-import React from "react";
-import AppNav from "../../components/AppNav/AppNav";
+import Map from "../../components/Map/Map";
+import SideBar from "../../components/Sidebar/SideBar";
+import styles from "./AppLayout.module.css";
 
 function AppLayout() {
   return (
-    <div>
-      <AppNav />
-      <h1>AppLayout</h1>
+    <div className={styles.app}>
+      <SideBar />
+      <Map />
     </div>
   );
 }

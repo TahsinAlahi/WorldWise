@@ -2,6 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./Map.module.css";
 
 function Map() {
+  // eslint-disable-next-line @/no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 

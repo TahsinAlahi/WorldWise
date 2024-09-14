@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import { useCities } from "../../contexts/CitiesContext";
 import Spinner from "../Spinner/Spinner";
+import BackButton from "../BackButton/BackButton";
 import styles from "./City.module.css";
 
 const formatDate = (date) =>
@@ -57,7 +58,9 @@ function City() {
         </a>
       </div>
 
-      <div>{/* <ButtonBack /> */}</div>
+      <div>
+        <BackButton />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { useUrlPosition } from "../../hooks/useUrlPosition";
 import Button from "../Button/Button";
@@ -6,6 +8,8 @@ import styles from "./Form.module.css";
 import BackButton from "../BackButton/BackButton";
 import Message from "../Message/Message";
 import Spinner from "../Spinner/Spinner";
+import { useCities } from "../../contexts/CitiesContext";
+import { useNavigate } from "react-router-dom";
 
 function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -27,6 +31,24 @@ function Form() {
   const [notes, setNotes] = useState("");
   const [emoji, setEmoji] = useState("");
   const [geoCodingError, setGeoCodingError] = useState("");
+  const { createCity } = useCities();
+  const navigate = useNavigate();
+
+  function handleSubmit() {
+    if (!cityName || !date) return;
+
+    const newCity = {
+      cityName,
+      country,
+      date,
+      emoji,
+      notes,
+      position: { lat, lng },
+    };
+
+    createCity(newCity);
+    navigate("/app/cities");
+  }
 
   useEffect(() => {
     async function getCityData() {
@@ -36,7 +58,6 @@ function Form() {
         setGeoCodingError("");
         const res = await fetch(`${BASE_URL}?latitude=${lat}&longitude=${lng}`);
         const data = await res.json();
-        console.log(data);
 
         if (!data.countryName)
           throw new Error("That isn't a city. Click somewhere else!!");
@@ -77,10 +98,11 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
+        <DatePicker
           id="date"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
+          dateFormat="dd/MM/yyyy"
+          selected={date}
+          onChange={(date) => setDate(date)}
         />
       </div>
 
@@ -94,7 +116,9 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <Button styleType="primary">Add</Button>
+        <Button onClick={handleSubmit} styleType="primary">
+          Add
+        </Button>
         <BackButton />
       </div>
     </form>

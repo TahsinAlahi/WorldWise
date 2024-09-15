@@ -30,6 +30,7 @@ function Form() {
 
   useEffect(() => {
     async function getCityData() {
+      if (!lat && !lng) return;
       try {
         setIsLoadingGeoCoding(true);
         setGeoCodingError("");
@@ -53,9 +54,14 @@ function Form() {
     getCityData();
   }, [lat, lng]);
 
+  if (!lat && !lng)
+    return (
+      <Message message="Start by looking somewhere in the map." emoji="👀" />
+    );
+
   if (isLoadingGeoCoding) return <Spinner />;
 
-  if (geoCodingError) return <Message message={geoCodingError} />;
+  if (geoCodingError) return <Message message={geoCodingError} emoji="🙂" />;
 
   return (
     <form className={styles.form}>

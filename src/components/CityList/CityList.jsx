@@ -11,7 +11,10 @@ function CityList() {
 
   if (!cities.length)
     return (
-      <Message message="Add your first city by clicking on a city on the map" />
+      <Message
+        message="Add your first city by clicking on a city on the map"
+        emoji="🗺️"
+      />
     );
 
   return (

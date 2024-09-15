@@ -1,9 +1,9 @@
 import styles from "./Message.module.css";
 
-function Message({ message }) {
+function Message({ message, emoji = "👋" }) {
   return (
     <p className={styles.message}>
-      <span role="img">👋</span> {message}
+      <span role="img">{emoji}</span> {message}
     </p>
   );
 }
